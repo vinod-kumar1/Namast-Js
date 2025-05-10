@@ -1,9 +1,10 @@
 import { Link, Outlet } from "react-router";
-import { useState } from "react";
+import { useState, Suspense, lazy } from "react";
+// import Onlinestatus from "./Onlinestatus";
 
 export default function Header() {
   let [login, setLogin] = useState("Login");
-
+  let Onlinestatus = lazy(() => import("./Onlinestatus"));
   let btnStyle = {
     backgroundColor: login == "Login" ? "black" : "rgb(255, 82, 0)",
   };
@@ -21,6 +22,9 @@ export default function Header() {
           <h2>Welcome to Gwiggy</h2>
         </div>
         <div className="header-link">
+          <Suspense fallback={"Loading..."}>
+            <Onlinestatus />
+          </Suspense>
           <Link to="/">Home</Link>
           <Link to="/about">About</Link>
           <button
