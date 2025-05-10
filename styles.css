@@ -1,3 +1,110 @@
 * {
-  color: red;
+  margin: 0px;
+  padding: 0px;
+  /* background-color: rgb(14, 14, 18);
+  color: white; */
+}
+
+.shim-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.shim-card {
+  background-color: #f0f0f0;
+  width: 150px;
+  height: 300px;
+  margin-bottom: 0.5rem;
+  animation: shimCard 1s infinite;
+}
+
+.rest-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.rest-card {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  height: 350px;
+  border: 0.5px solid black;
+  border-radius: 5px;
+}
+.rest-card * {
+  position: relative;
+}
+.rest-img {
+  width: 100%;
+}
+
+@keyframes shimCard {
+  50% {
+    background-color: rgb(255, 82, 0);
+  }
+  100% {
+    background-color: #f0f0f0;
+  }
+}
+
+.logo {
+  border-radius: 50%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header-link {
+  display: flex;
+  gap: 2rem;
+  position: relative;
+  right: 10%;
+  top: 2rem;
+}
+
+.header-link * {
+  height: min-content;
+}
+
+.btn {
+  padding: 1rem 2rem;
+  border-radius: 5px;
+  border: none;
+  font-weight: bold;
+  font-size: large;
+}
+.btn:hover {
+  cursor: pointer;
+}
+
+.rest-card:hover {
+  scale: 1.01;
+  transition: all;
+  cursor: pointer;
+}
+
+.rest-comp {
+  width: 200px;
+  height: max-content;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+}
+
+.rest-comp img {
+  width: 100%;
+  border-radius: 5px;
+  height: 150px;
+}
+
+.rest-category {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
