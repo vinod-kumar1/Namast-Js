@@ -3,6 +3,14 @@ import { useEffect, useState } from "react";
 export default function Onlinestatus() {
   let [online, setOnline] = useState(true);
 
+  let setOnlineTrue = () => {
+    setOnline(true);
+  };
+
+  let setOnlineFalse = () => {
+    setOnline(false);
+  };
+
   let signal = {
     width: "15px",
     height: "15px",
@@ -13,16 +21,16 @@ export default function Onlinestatus() {
   };
 
   useEffect(() => {
-    window.addEventListener("online", (e) => {
-      setOnline(true);
-    });
-    window.addEventListener("offline", (e) => {
-      setOnline(false);
-    });
+    window.addEventListener("online", setOnlineTrue);
+    window.addEventListener("offline", setOnlineFalse);
+    return () => {
+      window.removeEventListener("online", setOnlineTrue);
+      window.removeEventListener("offline", setOnlineFalse);
+    };
   }, []);
 
   return (
-    <p className="signal">
+    <p className="signal text-red-900">
       {" "}
       <span style={signal}></span> Internet
     </p>

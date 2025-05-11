@@ -1,8 +1,6 @@
-* {
+/* * {
   margin: 0px;
   padding: 0px;
-  /* background-color: rgb(14, 14, 18);
-  color: white; */
 }
 
 .shim-container {
@@ -102,8 +100,7 @@
   height: 150px;
 }
 
-.rest-category {
-  width: 100%;
+.rest-category div {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
@@ -114,3 +111,13 @@
   padding: 0.5rem 1rem;
   border-radius: 20px;
 }
+
+.rest-comp:hover {
+  scale: 1.01;
+} */
+
+/* index.css */
+/* style.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

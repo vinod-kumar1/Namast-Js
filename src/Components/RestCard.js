@@ -42,23 +42,19 @@ export default function RestCard() {
     res?.data?.cards[4].groupedCard.cardGroupMap.REGULAR.cards[3].card.card
       .itemCards
   );
-  let VegStarters =
+  let Starters =
     res?.data?.cards[4].groupedCard.cardGroupMap.REGULAR.cards[3].card.card
       .itemCards;
-  //   let nonVegStarters =
-  //     res?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card
-  //       ?.card?.categories[1];
 
   return (
     <div>
       <div className="veg rest-category">
-        <h3>VegStarters</h3>
-        {VegStarters?.map((rest) => (
-          <RestComponent key={rest.card.info.id} {...rest?.card?.info} />
-        ))}
-      </div>
-      <div className="non-veg rest-category">
-        <h3>Non-Veg Starters</h3>
+        <h3>Food 😋</h3>
+        <div>
+          {Starters?.map((rest) => (
+            <RestComponent key={rest.card.info.id} {...rest?.card?.info} />
+          ))}
+        </div>
       </div>
     </div>
   );

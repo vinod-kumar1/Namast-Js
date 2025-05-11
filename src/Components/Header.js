@@ -19,10 +19,10 @@ export default function Header() {
             src="https://imgs.search.brave.com/n0SGY1gJtNo19Zd_13HKYPve1Qb4ACF5OhgT4GJaj5Q/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tYXJr/ZXRwbGFjZS5jYW52/YS5jb20vRUFHRktz/ZUxKdG8vMi8wLzE2/MDB3L2NhbnZhLW9y/YW5nZS1hbmQtYmx1/ZS1pbGx1c3RyYXRp/dmUtY2lyY2xlLWZv/b2QtbG9nby1XRjVu/anc4cW1iMC5qcGc"
             alt="hotel logo"
           />
-          <h2>Welcome to Gwiggy</h2>
+          <h2 className="text-red-400">Welcome to Gwiggy</h2>
         </div>
         <div className="header-link">
-          <Suspense fallback={"Loading..."}>
+          <Suspense fallback={<p className="signal">Loading...</p>}>
             <Onlinestatus />
           </Suspense>
           <Link to="/">Home</Link>
@@ -36,6 +36,7 @@ export default function Header() {
           </button>
         </div>
       </div>
+      <hr />
       <Outlet />
     </div>
   );

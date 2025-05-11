@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Shimmer from "./Shimmer";
+import Shimmer from "/Components/Shimmer";
 import { Link } from "react-router";
 
 function App() {

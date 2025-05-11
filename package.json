@@ -1,21 +1,30 @@
 {
   "name": "namaste-react",
   "version": "1.0.0",
-  "type": "module",
   "scripts": {
-    "dev": "parcel index.html"
+    "dev": "parcel ./src/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vinod-kumar1/Namast-Js.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vinod-kumar1/Namast-Js/issues"
+  },
+  "homepage": "https://github.com/vinod-kumar1/Namast-Js#readme",
   "description": "",
   "dependencies": {
+    "concurrently": "^9.1.2",
     "parcel": "^2.14.4",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "react-router": "^7.5.3"
+    "react-router": "^7.6.0"
   },
-  "imports": {
-    "#root/*": "./*"
+  "devDependencies": {
+    "postcss": "^8.5.3",
+    "tailwindcss": "^3.4.17"
   }
 }
