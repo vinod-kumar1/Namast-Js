@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Shimmer from "/Components/Shimmer";
+import Shimmer from "./Components/Shimmer";
 import { Link } from "react-router";
 
 function App() {
@@ -10,7 +10,7 @@ function App() {
   useEffect(() => {
     async function fetchRest() {
       let res = await fetch(
-        "https://proxy.cors.sh/https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.97530&lng=77.59100&collection=83639&tags=layout_CCS_Biryani&sortBy=&filters=&type=rcv2&offset=0&page_type=null",
+        "https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.97530&lng=77.59100&collection=83639&tags=layout_CCS_Biryani&sortBy=&filters=&type=rcv2&offset=0&page_type=null",
         {
           headers: {
             "x-cors-api-key": "temp_a7d64221ae04ceb2eaa74f05b6d12a60",
@@ -40,20 +40,25 @@ function App() {
 
   return (
     <div className="container">
-      <label>
+      <label className="relative top-4 flex justify-center">
         <input
           type="text"
-          className="search"
-          placeholder="Search..."
+          className="outline-none border-b-orange-600 border"
+          placeholder=" So?..."
           value={search}
           onChange={(e) => {
             if (e.target.value == "") setFilterRest(rest);
             setSearch(e.target.value);
           }}
         />
-        <button onClick={searchRest}>Search</button>
+        <button
+          className="bg-blue-400 px-4 py-0.5 ml-1 rounded-md"
+          onClick={searchRest}
+        >
+          Search
+        </button>
       </label>
-      <div className="rest-container">
+      <div className="rest-container relative top-6 flex flex-wrap gap-4">
         {filterRest.length > 0 ? (
           filterRest.map(
             ({
@@ -65,10 +70,13 @@ function App() {
               id,
             }) => {
               return (
-                <div key={id} className="rest-card">
+                <div
+                  key={id}
+                  className="rest-card w-[200px] bg-slate-100 rounded-md"
+                >
                   <Link to={`/${id}`}>
                     <img
-                      className="rest-img"
+                      className="rest-img shadow-md"
                       src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/${cloudinaryImageId}`}
                     />
                   </Link>
