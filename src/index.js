@@ -27,7 +27,7 @@ let routerConfig = createBrowserRouter([
         element: <App />,
       },
       {
-        path: "/:restId",
+        path: "/:restId/:restName",
         element: <RestCard />,
       },
 
@@ -39,6 +39,8 @@ let routerConfig = createBrowserRouter([
   },
 ]);
 
-rdom
-  .createRoot(document.getElementById("root"))
-  .render(<RouterProvider router={routerConfig} />);
+rdom.createRoot(document.getElementById("root")).render(
+  <Error>
+    <RouterProvider router={routerConfig} />
+  </Error>
+);

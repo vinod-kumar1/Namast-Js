@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Shimmer from "./Components/Shimmer";
 import { Link } from "react-router";
+import Promoted from "./Components/Promoted";
 
 function App() {
   let [rest, setRest] = useState([]);
@@ -10,13 +11,11 @@ function App() {
   useEffect(() => {
     async function fetchRest() {
       let res = await fetch(
-        "https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.97530&lng=77.59100&collection=83639&tags=layout_CCS_Biryani&sortBy=&filters=&type=rcv2&offset=0&page_type=null",
-        {
-          headers: {
-            "x-cors-api-key": "temp_a7d64221ae04ceb2eaa74f05b6d12a60",
-          },
-        }
+        "https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.97530&lng=77.59100&collection=83639&tags=layout_CCS_Biryani&sortBy=&filters=&type=rcv2&offset=0&page_type=null"
       );
+      // headers: {
+      //   "x-cors-api-key": "temp_a7d64221ae04ceb2eaa74f05b6d12a60",
+      // },
       let data = await res.json();
       let temp = [];
       for (let i = 3; i < data.data.cards.length; i++) {
@@ -58,7 +57,7 @@ function App() {
           Search
         </button>
       </label>
-      <div className="rest-container relative top-6 flex flex-wrap gap-4">
+      <div className="rest-container relative top-6 flex flex-wrap gap-4 justify-center">
         {filterRest.length > 0 ? (
           filterRest.map(
             ({
@@ -68,15 +67,17 @@ function App() {
               areaName,
               cloudinaryImageId,
               id,
+              promoted,
             }) => {
               return (
                 <div
                   key={id}
-                  className="rest-card w-[200px] bg-slate-100 rounded-md"
+                  className="rest-card w-[250px] overflow-hidden bg-slate-100 p-4 rounded-md hover:scale-[1.01]"
                 >
-                  <Link to={`/${id}`}>
+                  {promoted ? <Promoted /> : ""}
+                  <Link to={`/${id}/${name}`}>
                     <img
-                      className="rest-img shadow-md"
+                      className="rest-img shadow-md rounded-sm"
                       src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/${cloudinaryImageId}`}
                     />
                   </Link>
