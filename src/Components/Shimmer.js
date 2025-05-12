@@ -12,3 +12,18 @@ export default function Shimmer() {
     </div>
   );
 }
+
+export function DetailsShimmer({ length }) {
+  return (
+    <div className="flex flex-wrap gap-4 top-4 rounded-md">
+      {Array(length || 10)
+        .fill(0)
+        .map((_, id) => (
+          <div
+            key={id}
+            className="bg-slate-300 w-[95%] py-4 relative px-2 rounded-md left-2"
+          ></div>
+        ))}
+    </div>
+  );
+}

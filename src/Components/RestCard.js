@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
-import Shimmer from "./Shimmer";
+import Shimmer, { DetailsShimmer } from "./Shimmer";
 import { useParams, Link } from "react-router";
 
 function MainComponent({ title, itemCards, restName }) {
   return (
-    <div>
-      <details>
-        <summary>{title}</summary>
-        <div className="veg rest-category relative top-4 flex flex-col items-center">
+    <div className="relative top-10">
+      <details className="bg-slate-300 w-[95%] py-4 relative px-2 rounded-md left-2">
+        <summary className="hover:cursor-pointer">{title}</summary>
+        <div className="veg rest-category relative top-4">
           <h3>{restName}</h3>
           <div
             className={`${
@@ -16,7 +16,6 @@ function MainComponent({ title, itemCards, restName }) {
           >
             {itemCards?.length > 0 ? (
               itemCards?.map((rest) => {
-                // console.log(rest);
                 return (
                   <RestComponent
                     restName={restName}
@@ -31,9 +30,6 @@ function MainComponent({ title, itemCards, restName }) {
               </div>
             )}
           </div>
-          <Link to={"/"} className="underline cursor-pointer">
-            Go Back
-          </Link>
         </div>
       </details>
     </div>
@@ -80,55 +76,35 @@ export default function RestCard() {
       );
       let json = await fetchRest.json();
       setRes(json);
-      // console.log(json?.data?.cards[4].groupedCard.cardGroupMap.REGULAR.cards);
     }
     helper();
   }, []);
 
-  if (res.length == 0) return <Shimmer />;
+  if (res.length == 0) return <DetailsShimmer length={res?.length} />;
 
   let Starters =
     res?.data?.cards[4].groupedCard.cardGroupMap.REGULAR.cards.filter(
       (card) => card.card.card.itemCards
     );
-  // res?.data?.cards[4].groupedCard.cardGroupMap.REGULAR.cards[3].card.card
-  //   .itemCards;
-  // console.log(Starters);
 
   return (
     <div>
-      {Starters.map((card) => {
-        let restCard = card.card.card;
-        console.log(restCard);
-        return (
-          <MainComponent
-            key={restCard.categoryId}
-            restName={restName}
-            {...restCard}
-          />
-        );
-      })}
-      {/* <div className="veg rest-category relative top-4 flex flex-col items-center">
-        <h3>{restName}</h3>
-        <div
-          className={`${
-            Starters?.length > 0 ? "bg-slate-100" : "bg-transparent"
-          } w-[100%] flex flex-wrap gap-4 justify-center relative`}
-        >
-          {Starters?.length > 0 ? (
-            Starters?.map((rest) => (
-              <RestComponent key={rest.card.info.id} {...rest?.card?.info} />
-            ))
-          ) : (
-            <div className="relative top-8">
-              <p>No items</p>
-            </div>
-          )}
-        </div>
-        <Link to={"/"} className="underline cursor-pointer">
-          Go Back
-        </Link>
-      </div> */}
+      <Link to="/" className="absolute right-4 top-[150px] underline">
+        Go Back
+      </Link>
+      <div className="flex flex-col gap-2">
+        {Starters.map((card) => {
+          let restCard = card.card.card;
+          console.log(restCard);
+          return (
+            <MainComponent
+              key={restCard.categoryId}
+              restName={restName}
+              {...restCard}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 }

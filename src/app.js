@@ -6,6 +6,7 @@ import Promoted from "./Components/Promoted";
 function App() {
   let [rest, setRest] = useState([]);
   let [filterRest, setFilterRest] = useState([]);
+  let [loader, setLoader] = useState(true);
   let [search, setSearch] = useState("");
 
   useEffect(() => {
@@ -13,9 +14,6 @@ function App() {
       let res = await fetch(
         "https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.97530&lng=77.59100&collection=83639&tags=layout_CCS_Biryani&sortBy=&filters=&type=rcv2&offset=0&page_type=null"
       );
-      // headers: {
-      //   "x-cors-api-key": "temp_a7d64221ae04ceb2eaa74f05b6d12a60",
-      // },
       let data = await res.json();
       let temp = [];
       for (let i = 3; i < data.data.cards.length; i++) {
@@ -23,7 +21,6 @@ function App() {
       }
       setRest(temp);
       setFilterRest(temp);
-      console.log(temp);
     }
     fetchRest();
   }, []);

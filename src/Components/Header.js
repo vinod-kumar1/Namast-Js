@@ -21,6 +21,9 @@ export default function Header() {
           />
           <h2 className="text-orange-400 relative top-2">Welcome to Gwiggy</h2>
         </div>
+        <p className="font-serif h-max py-4 w-[40%] px-12 rounded-r-2xl text-white relative top-4 text-5xl bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400">
+          EAT FULL
+        </p>
         <div className="header-link flex gap-4 relative right-4 top-8">
           <Suspense fallback={<p className="signal">Loading...</p>}>
             <Onlinestatus />
