@@ -30,7 +30,7 @@ export default function Onlinestatus() {
   }, []);
 
   return (
-    <p className="signal text-red-900">
+    <p className="signal">
       {" "}
       <span style={signal}></span> Internet
     </p>

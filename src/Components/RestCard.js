@@ -6,9 +6,11 @@ function MainComponent({ title, itemCards, restName }) {
   return (
     <div className="relative top-10">
       <details className="bg-slate-300 w-[95%] py-4 relative px-2 rounded-md left-2">
-        <summary className="hover:cursor-pointer">{title}</summary>
+        <summary className="hover:cursor-pointer">
+          {title} {itemCards?.length}
+        </summary>
         <div className="veg rest-category relative top-4">
-          <h3>{restName}</h3>
+          <h3 className="flex justify-center">{restName}</h3>
           <div
             className={`${
               itemCards?.length > 0 ? "bg-slate-100" : "bg-transparent"
@@ -36,13 +38,12 @@ function MainComponent({ title, itemCards, restName }) {
   );
 }
 
-function RestComponent({ restName, name, id, description, imageId, price }) {
+function RestComponent({ name, id, description, imageId, price }) {
   return (
     <div
       key={id}
-      className="rest-comp w-[250px] rounded-md bg-slate-200 min-h-max p-4 hover:scale-[1.01]"
+      className="rest-comp w-[250px] rounded-md bg-slate-200 min-h-max p-4 hover:scale-[1.01] relative top-2"
     >
-      <h3>{restName}</h3>
       {imageId ? (
         <img
           className="rounded-md mb-2"
@@ -95,7 +96,7 @@ export default function RestCard() {
       <div className="flex flex-col gap-2">
         {Starters.map((card) => {
           let restCard = card.card.card;
-          console.log(restCard);
+          console.log("itemCards" + restCard.itemCards);
           return (
             <MainComponent
               key={restCard.categoryId}

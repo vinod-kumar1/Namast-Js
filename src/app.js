@@ -6,7 +6,7 @@ import Promoted from "./Components/Promoted";
 function App() {
   let [rest, setRest] = useState([]);
   let [filterRest, setFilterRest] = useState([]);
-  let [loader, setLoader] = useState(true);
+  let [loading, setLoading] = useState(true);
   let [search, setSearch] = useState("");
 
   useEffect(() => {
@@ -21,17 +21,20 @@ function App() {
       }
       setRest(temp);
       setFilterRest(temp);
+      setLoading(false);
     }
     fetchRest();
   }, []);
 
   function searchRest() {
+    setLoading(true);
     setFilterRest(
       rest.filter(
         (rest) =>
           rest.name.toLowerCase().indexOf(search.toLocaleLowerCase()) != -1
       )
     );
+    setLoading(false);
   }
 
   return (
@@ -86,8 +89,10 @@ function App() {
               );
             }
           )
-        ) : (
+        ) : loading ? (
           <Shimmer />
+        ) : (
+          <p>No items found</p>
         )}
       </div>
     </div>
