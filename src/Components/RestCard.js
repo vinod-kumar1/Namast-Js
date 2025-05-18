@@ -43,28 +43,67 @@ function MainComponent({ title, itemCards, restName, cart, setCart }) {
 
 function RestComponent({ name, id, description, imageId, price }) {
   let { setCart } = useContext(CartContext);
+  let [count, setCount] = useState(0);
   return (
     <div
       key={id}
       className="rest-comp w-[250px] rounded-md bg-slate-200 min-h-max p-4 hover:scale-[1.01] relative top-2"
     >
-      <button
-        onClick={() => {
-          setCart((p) => [
-            ...p,
-            {
-              name,
-              id,
-              description,
-              imageId,
-              price,
-            },
-          ]);
-        }}
-        className="absolute bg-white px-2 m-1 rounded-md hover:scale-[1.1]"
-      >
-        +Add
-      </button>
+      <div className="m-1 absolute bg-black text-white border-white border-[1px] rounded-md">
+        <button
+          disabled={count <= 0}
+          onClick={() => {
+            setCount((p) => p - 1);
+            setCart((p) => {
+              let res = [...p];
+              let isExists = p.some((item) => item.id == id);
+
+              if (isExists) {
+                res = res.map((food) => {
+                  let item = { ...food };
+                  if (item.id == id) item.count - 1;
+                  return item;
+                });
+              } else res = res.filter((item) => item.id != id);
+              return res;
+            });
+          }}
+          className=" px-2 border-r-[1px]"
+        >
+          -
+        </button>
+        <span className="w-4 px-2 text-white">Add {count}</span>
+        <button
+          onClick={() => {
+            setCount((p) => p + 1);
+            setCart((p) => {
+              let res = [...p];
+              let isExists = res.some((item) => item.id == id);
+              if (isExists) {
+                res = res.map((food) => {
+                  let item = { ...food };
+                  if (item.id == id) item.count = item.count + 1;
+                  return item;
+                });
+              } else {
+                res = [
+                  ...res,
+                  {
+                    name,
+                    price,
+                    id,
+                    count: 1,
+                  },
+                ];
+              }
+              return res;
+            });
+          }}
+          className="w-max px-2 border-l-[1px] border-white"
+        >
+          +
+        </button>
+      </div>
       {imageId ? (
         <img
           className="rounded-md mb-2"
