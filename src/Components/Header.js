@@ -51,7 +51,12 @@ export default function Header() {
               </svg>
             </button>
           </abbr>
-
+          <Link
+            className="bg-emerald-300 hover:bg-orange-300 rounded-md relative h-max px-2 py-2 cursor-pointer"
+            to="cart"
+          >
+            My Cart
+          </Link>
           <Suspense fallback={<p className="signal">Loading...</p>}>
             <Onlinestatus />
           </Suspense>

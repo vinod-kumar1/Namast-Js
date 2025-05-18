@@ -2,7 +2,8 @@
   "name": "namaste-react",
   "version": "1.0.0",
   "scripts": {
-    "dev": "parcel ./src/index.html"
+    "dev": "parcel ./src/index.html",
+    "devC": "rm -rf ./.parcel-cache && npm run dev"
   },
   "repository": {
     "type": "git",

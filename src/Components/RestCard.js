@@ -1,13 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Shimmer, { DetailsShimmer } from "./Shimmer";
-import { useParams, Link } from "react-router";
+import { useParams, Link, Outlet } from "react-router";
+import CartContext from "./CartContext";
 
-function MainComponent({ title, itemCards, restName }) {
+function MainComponent({ title, itemCards, restName, cart, setCart }) {
   return (
     <div className="relative top-10">
       <details className="bg-slate-300 w-[95%] py-4 relative px-2 rounded-md left-2">
         <summary className="hover:cursor-pointer">
-          {title} {itemCards?.length}
+          {title} ({itemCards?.length})
         </summary>
         <div className="veg rest-category relative top-4">
           <h3 className="flex justify-center">{restName}</h3>
@@ -20,6 +21,8 @@ function MainComponent({ title, itemCards, restName }) {
               itemCards?.map((rest) => {
                 return (
                   <RestComponent
+                    cart={cart}
+                    setCart={setCart}
                     restName={restName}
                     key={rest?.card?.info?.id}
                     {...rest?.card?.info}
@@ -39,11 +42,29 @@ function MainComponent({ title, itemCards, restName }) {
 }
 
 function RestComponent({ name, id, description, imageId, price }) {
+  let { setCart } = useContext(CartContext);
   return (
     <div
       key={id}
       className="rest-comp w-[250px] rounded-md bg-slate-200 min-h-max p-4 hover:scale-[1.01] relative top-2"
     >
+      <button
+        onClick={() => {
+          setCart((p) => [
+            ...p,
+            {
+              name,
+              id,
+              description,
+              imageId,
+              price,
+            },
+          ]);
+        }}
+        className="absolute bg-white px-2 m-1 rounded-md hover:scale-[1.1]"
+      >
+        +Add
+      </button>
       {imageId ? (
         <img
           className="rounded-md mb-2"
@@ -70,6 +91,7 @@ function RestComponent({ name, id, description, imageId, price }) {
 export default function RestCard() {
   let [res, setRes] = useState([]);
   let { restId, restName } = useParams();
+
   useEffect(() => {
     async function helper() {
       let fetchRest = await fetch(
@@ -96,7 +118,6 @@ export default function RestCard() {
       <div className="flex flex-col gap-2">
         {Starters.map((card) => {
           let restCard = card.card.card;
-          console.log("itemCards" + restCard.itemCards);
           return (
             <MainComponent
               key={restCard.categoryId}

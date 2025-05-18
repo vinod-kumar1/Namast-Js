@@ -1,46 +1,71 @@
 import rdom from "react-dom/client";
 import App from "./app.js";
-import { BrowserRouter, Routes, Route, RouterProvider } from "react-router";
+import { RouterProvider } from "react-router";
 import About from "./Components/About.js";
 import Header from "./Components/Header.js";
 import RestCard from "./Components/RestCard.js";
-import Error from "./Components/Error.js";
 import { createBrowserRouter } from "react-router";
+import MyCart from "./Components/MyCart.js";
+import CartProvider from "./Components/CartProvider.js";
 
-//   <BrowserRouter>
-//     <Routes>
-//       <Route element={<Header />} path="/">
-//         <Route path="/" element={<App />}></Route>
-//         <Route path="/:restId" element={<RestCard />} />
-//         <Route path="/about" element={<About />} />
-//       </Route>
-//     </Routes>
-//   </BrowserRouter>
+// let routerConfig = createBrowserRouter([
+//   {
+//     path: "/",
+//     element: <Header />,
+//     children: [
+//       {
+//         path: "/",
+//         element: <App />,
+//       },
+//       {
+//         path: "/:restId/:restName",
+//         element: <RestCard />,
+//         children: [
+//           {
+//             path: "cart",
+//             element: <MyCart />,
+//           },
+//         ],
+//       },
 
-let routerConfig = createBrowserRouter([
+//       {
+//         path: "/about",
+//         element: <About />,
+//       },
+//     ],
+//   },
+// ]);
+
+const router = createBrowserRouter([
   {
     path: "/",
-    element: <Header />,
+    element: <Header />, // Top-level layout (optional)
     children: [
       {
-        path: "/",
-        element: <App />,
+        element: <CartProvider />, // Wrap shared state routes
+        children: [
+          {
+            path: ":restId/:restName",
+            element: <RestCard />,
+          },
+          {
+            path: "cart",
+            element: <MyCart />,
+          },
+        ],
       },
-      {
-        path: "/:restId/:restName",
-        element: <RestCard />,
-      },
-
       {
         path: "/about",
         element: <About />,
+      },
+      {
+        index: true,
+        element: <App />,
       },
     ],
   },
 ]);
 
-rdom.createRoot(document.getElementById("root")).render(
-  <Error>
-    <RouterProvider router={routerConfig} />
-  </Error>
-);
+rdom
+  .createRoot(document.getElementById("root"))
+  .render(<RouterProvider router={router} />);
