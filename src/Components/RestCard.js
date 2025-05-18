@@ -16,7 +16,6 @@ function MainComponent({
     <div className="relative top-10">
       <details
         onClick={(e) => {
-          window.scrollTo(0, e.target.getBoundingClientRect().top + 10);
           e.preventDefault();
           showItem();
         }}

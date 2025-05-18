@@ -1,9 +1,9 @@
 import { Link, Outlet } from "react-router";
-import { useState, Suspense, lazy } from "react";
-// import Onlinestatus from "./Onlinestatus";
+import { useState, Suspense, lazy, createContext } from "react";
+import { LoggedIn } from "..";
 
 export default function Header() {
-  let [login, setLogin] = useState("Login");
+  let [login, setLogin] = useState("login");
   let Onlinestatus = lazy(() => import("./Onlinestatus"));
   let [theme, setTheme] = useState("light");
 
@@ -68,14 +68,16 @@ export default function Header() {
           </Link>
           <button
             className="bg-blue-400 h-8 px-4 py-1 rounded-md hover:scale-[1.01]"
-            onClick={() => setLogin((p) => (p == "Login" ? "Logout" : "Login"))}
+            onClick={() => setLogin((p) => (p == "login" ? "Logout" : "login"))}
           >
-            {login}
+            {login == "login" ? "Looged In" : "Logged out"}
           </button>
         </div>
       </div>
       <hr className="relative top-2" />
-      <Outlet />
+      <LoggedIn.Provider value={{ login, setLogin }}>
+        <Outlet />
+      </LoggedIn.Provider>
     </div>
   );
 }

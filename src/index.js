@@ -7,6 +7,9 @@ import RestCard from "./Components/RestCard.js";
 import { createBrowserRouter } from "react-router";
 import MyCart from "./Components/MyCart.js";
 import CartProvider from "./Components/CartProvider.js";
+import { createContext } from "react";
+
+let LoggedIn = createContext();
 
 // let routerConfig = createBrowserRouter([
 //   {
@@ -69,3 +72,5 @@ const router = createBrowserRouter([
 rdom
   .createRoot(document.getElementById("root"))
   .render(<RouterProvider router={router} />);
+
+export { LoggedIn };
