@@ -1,12 +1,28 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import Shimmer, { DetailsShimmer } from "./Shimmer";
 import { useParams, Link, Outlet } from "react-router";
 import CartContext from "./CartContext";
 
-function MainComponent({ title, itemCards, restName, cart, setCart }) {
+function MainComponent({
+  title,
+  itemCards,
+  restName,
+  cart,
+  setCart,
+  showItem,
+  isOpen,
+}) {
   return (
     <div className="relative top-10">
-      <details className="bg-slate-300 w-[95%] py-4 relative px-2 rounded-md left-2">
+      <details
+        onClick={(e) => {
+          window.scrollTo(0, e.target.getBoundingClientRect().top + 10);
+          e.preventDefault();
+          showItem();
+        }}
+        open={isOpen}
+        className="bg-slate-300 w-[95%] py-4 relative px-2 rounded-md left-2"
+      >
         <summary className="hover:cursor-pointer">
           {title} ({itemCards?.length})
         </summary>
@@ -129,6 +145,8 @@ function RestComponent({ name, id, description, imageId, price }) {
 
 export default function RestCard() {
   let [res, setRes] = useState([]);
+  let [showIndex, setShowIndex] = useState(0);
+
   let { restId, restName } = useParams();
 
   useEffect(() => {
@@ -155,13 +173,15 @@ export default function RestCard() {
         Go Back
       </Link>
       <div className="flex flex-col gap-2">
-        {Starters.map((card) => {
+        {Starters.map((card, index) => {
           let restCard = card.card.card;
           return (
             <MainComponent
+              showItem={() => setShowIndex(index)}
               key={restCard.categoryId}
               restName={restName}
               {...restCard}
+              isOpen={showIndex == index ? true : false}
             />
           );
         })}
