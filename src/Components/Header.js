@@ -1,6 +1,7 @@
 import { Link, Outlet } from "react-router";
 import { useState, Suspense, lazy, createContext } from "react";
 import { LoggedIn } from "..";
+import ThemeContext from "./themeContext";
 
 export default function Header() {
   let [login, setLogin] = useState("login");
@@ -76,7 +77,9 @@ export default function Header() {
       </div>
       <hr className="relative top-2" />
       <LoggedIn.Provider value={{ login, setLogin }}>
-        <Outlet />
+        <ThemeContext.Provider value={{ theme }}>
+          <Outlet />
+        </ThemeContext.Provider>
       </LoggedIn.Provider>
     </div>
   );

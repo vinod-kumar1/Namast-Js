@@ -2,6 +2,9 @@ import { useState, useEffect, useContext, useRef } from "react";
 import Shimmer, { DetailsShimmer } from "./Shimmer";
 import { useParams, Link, Outlet } from "react-router";
 import CartContext from "./CartContext";
+import { LoggedIn } from "..";
+import NoAuth from "./NoAuth";
+import ThemeContext from "./themeContext";
 
 function MainComponent({
   title,
@@ -12,8 +15,14 @@ function MainComponent({
   showItem,
   isOpen,
 }) {
+  let { theme } = useContext(ThemeContext);
+
   return (
-    <div className="relative top-10">
+    <div
+      className={`relative top-10 ${
+        theme == "light" ? " dark:!bg-white" : " dark:!bg-slate-800"
+      } ${theme == "light" ? "dark:!text-black" : "dark:!text-white"}`}
+    >
       <details
         onClick={(e) => {
           e.preventDefault();
@@ -59,12 +68,18 @@ function MainComponent({
 function RestComponent({ name, id, description, imageId, price }) {
   let { setCart } = useContext(CartContext);
   let [count, setCount] = useState(0);
+  let { theme } = useContext(ThemeContext);
+
   return (
     <div
       key={id}
-      className="rest-comp w-[250px] rounded-md bg-slate-200 min-h-max p-4 hover:scale-[1.01] relative top-2"
+      className={`rest-comp w-[250px] rounded-md bg-slate-200 min-h-max p-4 hover:scale-[1.01] relative top-2`}
     >
-      <div className="m-1 absolute bg-black text-white border-white border-[1px] rounded-md">
+      <div
+        className={`m-1 absolute bg-black text-white border-white border-[1px] rounded-md ${
+          theme == "light" ? " bg-black" : "bg-white"
+        } ${theme == "light" ? "text-white" : "text-black"}`}
+      >
         <button
           disabled={count <= 0}
           onClick={() => {
@@ -145,6 +160,7 @@ function RestComponent({ name, id, description, imageId, price }) {
 export default function RestCard() {
   let [res, setRes] = useState([]);
   let [showIndex, setShowIndex] = useState(0);
+  let { login } = useContext(LoggedIn);
 
   let { restId, restName } = useParams();
 
@@ -168,23 +184,29 @@ export default function RestCard() {
 
   return (
     <div>
-      <Link to="/" className="absolute right-4 top-[150px] underline">
-        Go Back
-      </Link>
-      <div className="flex flex-col gap-2">
-        {Starters.map((card, index) => {
-          let restCard = card.card.card;
-          return (
-            <MainComponent
-              showItem={() => setShowIndex(index)}
-              key={restCard.categoryId}
-              restName={restName}
-              {...restCard}
-              isOpen={showIndex == index ? true : false}
-            />
-          );
-        })}
-      </div>
+      {login == "login" ? (
+        <div>
+          <Link to="/" className="absolute right-4 top-[150px] underline">
+            Go Back
+          </Link>
+          <div className="flex flex-col gap-2">
+            {Starters.map((card, index) => {
+              let restCard = card.card.card;
+              return (
+                <MainComponent
+                  showItem={() => setShowIndex(index)}
+                  key={restCard.categoryId}
+                  restName={restName}
+                  {...restCard}
+                  isOpen={showIndex == index ? true : false}
+                />
+              );
+            })}
+          </div>
+        </div>
+      ) : (
+        <NoAuth />
+      )}
     </div>
   );
 }
